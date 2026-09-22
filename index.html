@@ -3,390 +3,334 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Персональный сайт учителя</title>
+    <title>Месьянинова Тамара Юрьевна - Портфолио учителя</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Nunito', 'sans-serif'] },
+                    colors: {
+                        green: { 50: '#f0fdf4', 100: '#dcfce7', 500: '#22c55e', 600: '#16a34a', 700: '#15803d', 800: '#166534', 900: '#14532d' },
+                        yellow: { 50: '#fefce8', 100: '#fef9c3', 400: '#facc15', 500: '#eab308', 600: '#ca8a04' }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-            color: #1f2937; /* slate-800 */
+        body { font-family: 'Nunito', sans-serif; background-color: #f0fdf4; }
+        .tab-content { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .section-title {
-            position: relative;
-            padding-bottom: 0.5rem;
-            margin-bottom: 2rem;
-            font-weight: 700;
-            font-size: 1.875rem;
-            color: #1e3a8a; /* blue-900 */
-        }
-        .section-title::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 4rem;
-            height: 0.25rem;
-            background-color: #3b82f6; /* blue-500 */
-            border-radius: 0.125rem;
-        }
-        .card {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
+        .toast-enter { transform: translateY(0); opacity: 1; }
+        .toast-leave { transform: translateY(150%); opacity: 0; }
     </style>
 </head>
-<body class="bg-slate-50 antialiased">
+<body class="text-green-800 flex flex-col min-h-screen">
 
-    <header class="fixed top-0 w-full bg-white shadow-sm z-50 border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex-shrink-0 flex items-center">
-                    <span class="font-bold text-xl text-blue-900">Сайт педагога</span>
+    <div id="toast" class="fixed bottom-4 right-4 transform translate-y-[150%] opacity-0 transition-all duration-300 z-50 bg-yellow-400 text-green-900 px-6 py-4 rounded-2xl shadow-xl font-bold flex items-center gap-3 pointer-events-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span id="toast-message">Уведомление</span>
+    </div>
+
+    <header class="bg-green-600 text-white shadow-lg sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center text-green-900 font-extrabold text-xl shadow-inner">ТЮ</div>
+                <div>
+                    <h1 class="text-2xl font-extrabold tracking-tight text-yellow-50 leading-tight">Месьянинова Т.Ю.</h1>
+                    <p class="text-green-100 text-sm font-semibold">Учитель начальных классов</p>
                 </div>
-                <nav class="hidden md:flex space-x-6">
-                    <a href="#about" class="text-slate-600 hover:text-blue-600 font-medium transition">Обо мне</a>
-                    <a href="#legal" class="text-slate-600 hover:text-blue-600 font-medium transition">Документы</a>
-                    <a href="#methodology" class="text-slate-600 hover:text-blue-600 font-medium transition">Методическая копилка</a>
-                    <a href="#continuity" class="text-slate-600 hover:text-blue-600 font-medium transition">Преемственность</a>
-                    <a href="#interaction" class="text-slate-600 hover:text-blue-600 font-medium transition">Инструменты</a>
-                    <a href="#results" class="text-slate-600 hover:text-blue-600 font-medium transition">Результаты</a>
-                    <a href="#contacts" class="text-slate-600 hover:text-blue-600 font-medium transition">Контакты</a>
-                </nav>
-                <!-- Мобильное меню (кнопка) -->
-                <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="text-slate-600 hover:text-blue-600 focus:outline-none">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </div>
+            
+            <div class="relative flex items-center w-full md:w-auto">
+                <input type="text" id="searchInput" placeholder="Поиск по сайту..." class="w-full md:w-64 pl-4 pr-12 py-2.5 rounded-full text-green-900 text-sm focus:outline-none focus:ring-4 focus:ring-yellow-400 border-none shadow-inner bg-white">
+                <button onclick="handleSearch()" class="absolute right-1 top-1 bottom-1 bg-yellow-400 hover:bg-yellow-500 text-green-900 rounded-full px-4 transition-colors flex items-center justify-center font-bold">
+                    Найти
+                </button>
+            </div>
+        </div>
+        
+        <nav class="bg-green-700 px-4 sm:px-6 lg:px-8 overflow-x-auto">
+            <div class="max-w-7xl mx-auto flex space-x-2 min-w-max pt-2">
+                <button onclick="openTab('about')" id="btn-about" class="tab-btn px-6 py-3 text-sm font-bold rounded-t-xl transition-all bg-green-50 text-green-800 shadow-sm">Обо мне</button>
+                <button onclick="openTab('news')" id="btn-news" class="tab-btn px-6 py-3 text-sm font-bold rounded-t-xl transition-all text-green-100 hover:bg-green-600 hover:text-white">Новости</button>
+                <button onclick="openTab('materials')" id="btn-materials" class="tab-btn px-6 py-3 text-sm font-bold rounded-t-xl transition-all text-green-100 hover:bg-green-600 hover:text-white">Материалы</button>
+                <button onclick="openTab('documents')" id="btn-documents" class="tab-btn px-6 py-3 text-sm font-bold rounded-t-xl transition-all text-green-100 hover:bg-green-600 hover:text-white">Документы</button>
+                <button onclick="openTab('contacts')" id="btn-contacts" class="tab-btn px-6 py-3 text-sm font-bold rounded-t-xl transition-all text-green-100 hover:bg-green-600 hover:text-white">Контакты</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+        
+        <section id="about" class="tab-content active">
+            <div class="bg-white rounded-3xl shadow-xl p-8 flex flex-col md:flex-row gap-10 items-start border-t-8 border-yellow-400">
+                <div class="w-full md:w-1/3 flex-shrink-0">
+                    <img src="ovWwU5nTUsaM2oZp2HQCPYw06Z2Fv16BXIAU1WGZpZNPI0byVqyFEFEphdiI5A2FZv5vy71qzZUw_jhkJbMbsKFJ.jpg" alt="Месьянинова Тамара Юрьевна" class="w-full h-auto rounded-2xl shadow-lg border-4 border-green-50 object-cover object-top">
+                </div>
+                <div class="w-full md:w-2/3">
+                    <span class="bg-green-100 text-green-800 px-4 py-1.5 rounded-full text-sm font-extrabold mb-4 inline-block tracking-wide">Самопрезентация</span>
+                    <h2 class="text-4xl font-extrabold text-green-800 mb-3">Добро пожаловать!</h2>
+                    <h3 class="text-2xl font-bold text-yellow-600 mb-6">Я — Месьянинова Тамара Юрьевна</h3>
+                    
+                    <p class="text-lg text-green-900 mb-6 leading-relaxed font-medium">
+                        Я рада видеть вас на моем образовательном ресурсе! Моя главная педагогическая миссия — создание комфортной, безопасной и мотивирующей среды для каждого моего ученика. Я твердо верю, что именно на моих уроках в начальной школе закладывается любовь к обучению, уверенность в себе и умение дружить. Я не просто осваиваю с детьми программу, я учу их мыслить, творить и достигать поставленных целей.
+                    </p>
+                    
+                    <div class="bg-green-50 p-6 rounded-2xl border border-green-200 shadow-sm">
+                        <h4 class="font-bold text-green-800 text-xl mb-4">Моя результативность и принципы работы:</h4>
+                        <ul class="space-y-3 text-green-900 font-semibold">
+                            <li class="flex items-start gap-3">
+                                <span class="text-yellow-500 text-xl mt-0.5">🌟</span> 
+                                <span>Я обеспечиваю 100% успеваемость моих учеников на протяжении последних лет.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-yellow-500 text-xl mt-0.5">🏆</span> 
+                                <span>Я успешно готовлю победителей и призеров городских олимпиад.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-yellow-500 text-xl mt-0.5">📚</span> 
+                                <span>Я применяю индивидуальный подход к психологическим особенностям каждого моего ученика.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="news" class="tab-content">
+            <h2 class="text-3xl font-extrabold text-green-800 mb-8 flex items-center gap-3">
+                <span class="text-4xl text-yellow-500">📰</span> Моя новостная лента
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Новость 1 -->
+                <article class="bg-white rounded-3xl shadow-lg overflow-hidden border border-green-100 hover:shadow-xl transition-shadow group">
+                    <div class="overflow-hidden h-72 bg-gray-100">
+                        <img src="i-65.webp" alt="Ученица за партой" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-8">
+                        <span class="inline-block px-3 py-1 bg-yellow-400 text-green-900 rounded-full text-xs font-bold mb-3">Организация среды</span>
+                        <h3 class="text-2xl font-bold text-green-800 mb-3">Мой класс готов к учебе!</h3>
+                        <p class="text-green-900 font-medium mb-5">Я завершила оформление моего кабинета к новому учебному году. Я тщательно продумала все зоны для отдыха и активного обучения, чтобы моим ученикам было максимально комфортно и безопасно.</p>
+                        <button onclick="showToast('Открываю полную статью об организации моего класса...')" class="font-bold text-green-600 hover:text-green-800 flex items-center gap-1 transition-colors">Читать далее <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                    </div>
+                </article>
+                
+                <!-- Новость 2 -->
+                <article class="bg-white rounded-3xl shadow-lg overflow-hidden border border-green-100 hover:shadow-xl transition-shadow group">
+                    <div class="overflow-hidden h-72 bg-gray-100">
+                        <img src="shkola2-e1722508170581.jpg.webp" alt="Ученики на уроке" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-8">
+                        <span class="inline-block px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-bold mb-3">Учебный процесс</span>
+                        <h3 class="text-2xl font-bold text-green-800 mb-3">Первые успехи моих учеников</h3>
+                        <p class="text-green-900 font-medium mb-5">Мои ученики активно включились в процесс! Я поздравляю ребят с успешной адаптацией. Улыбки детей на моих уроках — лучший показатель комфортной образовательной среды, которую я создаю.</p>
+                        <button onclick="showToast('Открываю фотоотчет с моих уроков...')" class="font-bold text-green-600 hover:text-green-800 flex items-center gap-1 transition-colors">Смотреть фото <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="materials" class="tab-content">
+            <div class="bg-white rounded-3xl shadow-lg p-8 border-t-8 border-green-600 mb-8">
+                <h2 class="text-3xl font-extrabold text-green-800 mb-8 text-center">Мои полезные материалы</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                    <!-- Детям -->
+                    <div class="bg-green-50 p-8 rounded-3xl border border-green-200 hover:shadow-md transition-shadow">
+                        <div class="text-4xl mb-4 text-center">🧸</div>
+                        <h3 class="text-2xl font-bold text-green-800 mb-4 text-center">Детям</h3>
+                        <p class="text-green-900 font-medium text-center mb-6">Онлайн-инструменты, которые я использую для интерактивного обучения моих учеников.</p>
+                        <div class="space-y-4">
+                            <a href="https://uchi.ru" target="_blank" class="block w-full text-center bg-white border-2 border-green-200 hover:border-yellow-400 text-green-800 font-bold py-3 rounded-xl transition-colors shadow-sm">Платформа Учи.ру</a>
+                            <button onclick="showToast('Запускаю мой авторский тренажер...')" class="w-full text-center bg-yellow-400 hover:bg-yellow-500 text-green-900 font-bold py-3 rounded-xl transition-colors shadow-sm">Мои авторские тесты</button>
+                        </div>
+                    </div>
+
+                    <!-- Родителям -->
+                    <div class="bg-yellow-50 p-8 rounded-3xl border border-yellow-200 hover:shadow-md transition-shadow">
+                        <div class="text-4xl mb-4 text-center">👨‍👩‍👧‍👦</div>
+                        <h3 class="text-2xl font-bold text-green-800 mb-4 text-center">Родителям</h3>
+                        <p class="text-green-900 font-medium mb-4">В моей работе я делаю особый акцент на преемственность начальной и средней школы.</p>
+                        <p class="text-green-800 text-sm font-semibold bg-white p-4 rounded-xl border border-yellow-200">
+                            Я заранее готовлю детей к переходу в 5 класс: развиваю навыки самостоятельности, обучаю тайм-менеджменту и готовлю к смене обстановки, чтобы мой выпускник чувствовал себя уверенно.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Коллегам -->
+                <div class="bg-white border-2 border-green-100 p-8 rounded-3xl text-center max-w-3xl mx-auto shadow-sm">
+                    <div class="text-4xl mb-4">📚</div>
+                    <h3 class="text-2xl font-bold text-green-800 mb-3">Коллегам</h3>
+                    <p class="text-green-900 font-medium mb-6">Здесь я публикую свои методические разработки, конспекты открытых уроков и делюсь моим педагогическим опытом.</p>
+                    <button onclick="showToast('Открываю базу моих методических разработок...')" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-xl transition-colors shadow-md">
+                        Перейти к моим разработкам
                     </button>
                 </div>
             </div>
-        </div>
-        <!-- Мобильное меню (выпадающее) -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 px-2 pt-2 pb-3 space-y-1 sm:px-3 shadow-lg">
-            <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-blue-600 hover:bg-slate-50">Обо мне</a>
-            <a href="#legal" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-blue-600 hover:bg-slate-50">Документы</a>
-            <a href="#methodology" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-blue-600 hover:bg-slate-50">Методическая копилка</a>
-            <a href="#continuity" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-blue-600 hover:bg-slate-50">Преемственность</a>
-            <a href="#interaction" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-blue-600 hover:bg-slate-50">Инструменты</a>
-            <a href="#results" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-blue-600 hover:bg-slate-50">Результаты</a>
-            <a href="#contacts" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-blue-600 hover:bg-slate-50">Контакты</a>
-        </div>
-    </header>
-
-    <main class="pt-16">
-        <section id="about" class="py-16 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-col lg:flex-row gap-12 items-start">
-                    <div class="w-full lg:w-1/3">
-                        <img src="https://placehold.co/400x500/e2e8f0/1e3a8a?text=Фото+учителя" alt="Фотография учителя" class="rounded-lg shadow-md w-full object-cover">
-                    </div>
-                    <div class="w-full lg:w-2/3">
-                        <h1 class="text-4xl font-bold text-blue-900 mb-2">Иванова Анна Ивановна</h1>
-                        <p class="text-xl text-slate-500 mb-6 font-medium">Учитель начальных классов первой квалификационной категории</p>
-                        
-                        <h2 class="text-2xl font-semibold text-slate-800 mb-3">Цель сайта</h2>
-                        <p class="text-slate-600 mb-6 leading-relaxed">
-                            Я создала данный ресурс для систематизации моего педагогического опыта, предоставления методической поддержки коллегам, а также для открытого взаимодействия с родителями моих учеников. Моя профессиональная миссия — обеспечение качественного начального образования в соответствии с современными стандартами и создание комфортной образовательной среды для каждого ребенка.
-                        </p>
-
-                        <h2 class="text-2xl font-semibold text-slate-800 mb-3">Краткая биография и образование</h2>
-                        <p class="text-slate-600 mb-6 leading-relaxed">
-                            Мой педагогический стаж составляет 12 лет. В 2012 году я окончила Московский педагогический государственный университет (МПГУ) по специальности «Педагогика и методика начального образования». С тех пор я непрерывно совершенствую свои навыки.
-                        </p>
-
-                        <h2 class="text-2xl font-semibold text-slate-800 mb-3">Повышение квалификации</h2>
-                        <ul class="list-disc list-inside text-slate-600 mb-6 space-y-2">
-                            <li>«Реализация требований обновленного ФГОС НОО в работе учителя» (72 часа, 2022 г.).</li>
-                            <li>«Информационно-коммуникационные технологии в педагогической деятельности» (36 часов, 2023 г.).</li>
-                            <li>«Организация инклюзивного образования детей с ОВЗ в начальной школе» (72 часа, 2024 г.).</li>
-                        </ul>
-
-                        <h2 class="text-2xl font-semibold text-slate-800 mb-3">Мои увлечения</h2>
-                        <p class="text-slate-600 leading-relaxed">
-                            В свободное время я увлекаюсь изучением краеведения и организацией туристических походов. Это хобби позволяет мне обогащать уроки окружающего мира реальными примерами и организовывать познавательные экскурсии для моего класса.
-                        </p>
-                    </div>
-                </div>
-            </div>
         </section>
 
-        <section id="legal" class="py-16 bg-slate-50">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="section-title">Нормативно-правовая база</h2>
-                <p class="text-slate-600 mb-8">В своей профессиональной деятельности я строго руководствуюсь актуальными нормативно-правовыми документами Российской Федерации. Ниже представлены основные акты, регламентирующие образовательный процесс.</p>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="card bg-white p-6 rounded-lg border border-slate-200 shadow-sm flex flex-col justify-between">
-                        <div>
-                            <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-4">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                            </div>
-                            <h3 class="text-lg font-bold text-slate-800 mb-2">ФГОС НОО</h3>
-                            <p class="text-sm text-slate-600 mb-4">Приказ Минпросвещения России от 31.05.2021 № 286 «Об утверждении федерального государственного образовательного стандарта начального общего образования».</p>
-                        </div>
-                        <button class="mt-4 w-full bg-blue-50 hover:bg-blue-100 text-blue-700 py-2 px-4 rounded transition font-medium text-sm">Скачать документ / PDF</button>
-                    </div>
-
-                    <div class="card bg-white p-6 rounded-lg border border-slate-200 shadow-sm flex flex-col justify-between">
-                        <div>
-                            <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-4">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path></svg>
-                            </div>
-                            <h3 class="text-lg font-bold text-slate-800 mb-2">Закон об образовании</h3>
-                            <p class="text-sm text-slate-600 mb-4">Федеральный закон от 29.12.2012 № 273-ФЗ «Об образовании в Российской Федерации» (с изменениями и дополнениями).</p>
-                        </div>
-                        <button class="mt-4 w-full bg-blue-50 hover:bg-blue-100 text-blue-700 py-2 px-4 rounded transition font-medium text-sm">Перейти к источнику</button>
-                    </div>
-
-                    <div class="card bg-white p-6 rounded-lg border border-slate-200 shadow-sm flex flex-col justify-between">
-                        <div>
-                            <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-4">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                            </div>
-                            <h3 class="text-lg font-bold text-slate-800 mb-2">Конвенция о правах ребенка</h3>
-                            <p class="text-sm text-slate-600 mb-4">Одобрена Генеральной Ассамблеей ООН 20.11.1989. Защищает базовые права несовершеннолетних, включая право на образование.</p>
-                        </div>
-                        <button class="mt-4 w-full bg-blue-50 hover:bg-blue-100 text-blue-700 py-2 px-4 rounded transition font-medium text-sm">Скачать документ / PDF</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="methodology" class="py-16 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="section-title">Методическая копилка</h2>
-                <p class="text-slate-600 mb-8">Я систематизировала свои методические разработки, рабочие программы и дидактические материалы. Раздел строго структурирован с учетом возрастных и психологических особенностей младших школьников.</p>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- 1 Класс -->
-                    <div class="card border border-slate-200 rounded-lg overflow-hidden shadow-sm">
-                        <div class="bg-blue-50 px-4 py-3 border-b border-slate-200">
-                            <h3 class="font-bold text-blue-900 text-center text-lg">1 Класс</h3>
-                        </div>
-                        <div class="p-4 space-y-3">
-                            <p class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Адаптационный период</p>
-                            <a href="#" class="block text-sm text-blue-600 hover:underline">Рабочая программа (Обучение грамоте)</a>
-                            <a href="#" class="block text-sm text-blue-600 hover:underline">Прописи и графомоторные навыки</a>
-                            <a href="#" class="block text-sm text-blue-600 hover:underline">Памятка: "Как сидеть за партой"</a>
-                        </div>
-                    </div>
-
-                    <!-- 2 Класс -->
-                    <div class="card border border-slate-200 rounded-lg overflow-hidden shadow-sm">
-                        <div class="bg-blue-50 px-4 py-3 border-b border-slate-200">
-                            <h3 class="font-bold text-blue-900 text-center text-lg">2 Класс</h3>
-                        </div>
-                        <div class="p-4 space-y-3">
-                            <p class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Формирование навыков</p>
-                            <a href="#" class="block text-sm text-blue-600 hover:underline">Рабочая программа (Русский язык)</a>
-                            <a href="#" class="block text-sm text-blue-600 hover:underline">Карточки по математике (Умножение)</a>
-                            <a href="#" class="block text-sm text-blue-600 hover:underline">Тесты по окружающему миру</a>
-                        </div>
-                    </div>
-
-                    <!-- 3 Класс -->
-                    <div class="card border border-slate-200 rounded-lg overflow-hidden shadow-sm">
-                        <div class="bg-blue-50 px-4 py-3 border-b border-slate-200">
-                            <h3 class="font-bold text-blue-900 text-center text-lg">3 Класс</h3>
-                        </div>
-                        <div class="p-4 space-y-3">
-                            <p class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Развитие УУД</p>
-                            <a href="#" class="block text-sm text-blue-600 hover:underline">Рабочая программа (Литературное чтение)</a>
-                            <a href="#" class="block text-sm text-blue-600 hover:underline">Проекты и исследовательская работа</a>
-                            <a href="#" class="block text-sm text-blue-600 hover:underline">Словарные диктанты</a>
-                        </div>
-                    </div>
-
-                    <!-- 4 Класс -->
-                    <div class="card border border-slate-200 rounded-lg overflow-hidden shadow-sm">
-                        <div class="bg-blue-50 px-4 py-3 border-b border-slate-200">
-                            <h3 class="font-bold text-blue-900 text-center text-lg">4 Класс</h3>
-                        </div>
-                        <div class="p-4 space-y-3">
-                            <p class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Подготовка к ВПР</p>
-                            <a href="#" class="block text-sm text-blue-600 hover:underline">Рабочая программа (Математика)</a>
-                            <a href="#" class="block text-sm text-blue-600 hover:underline">Тренажеры для подготовки к ВПР</a>
-                            <a href="#" class="block text-sm text-blue-600 hover:underline">Итоговые контрольные работы</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="continuity" class="py-16 bg-slate-50">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="section-title">Преемственность: переход в 5 класс</h2>
-                <p class="text-slate-600 mb-8">Я уделяю особое внимание периоду адаптации четвероклассников при переходе в среднее звено. Мною разработаны материалы как для родителей, так и для коллег, принимающих выпускников.</p>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Для родителей -->
-                    <div class="bg-white p-8 rounded-lg shadow-sm border-l-4 border-blue-500">
-                        <h3 class="text-xl font-bold text-slate-800 mb-4">Для родителей четвероклассников</h3>
-                        <p class="text-slate-600 mb-4">Переход в пятый класс сопровождается изменением условий обучения: кабинетная система, увеличение числа преподавателей. Я подготовила методические рекомендации для снижения уровня тревожности детей.</p>
-                        <ul class="space-y-2 mb-6">
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-blue-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                <span class="text-sm text-slate-700">Памятка: «Психологическая готовность к 5 классу»</span>
-                            </li>
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-blue-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                <span class="text-sm text-slate-700">Анкета выявления уровня школьной мотивации</span>
-                            </li>
-                        </ul>
-                        <button class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded transition font-medium text-sm">Скачать материалы для родителей</button>
-                    </div>
-
-                    <!-- Для учителей -->
-                    <div class="bg-white p-8 rounded-lg shadow-sm border-l-4 border-slate-500">
-                        <h3 class="text-xl font-bold text-slate-800 mb-4">Для учителей-предметников</h3>
-                        <p class="text-slate-600 mb-4">С целью сохранения единого образовательного пространства я составляю развернутые характеристики на класс, опираясь на требования ФГОС НОО.</p>
-                        <ul class="space-y-2 mb-6">
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-slate-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                <span class="text-sm text-slate-700">Портрет выпускника начальной школы (аналитическая справка)</span>
-                            </li>
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-slate-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                <span class="text-sm text-slate-700">Сводная ведомость сформированности предметных результатов</span>
-                            </li>
-                        </ul>
-                        <button class="bg-slate-200 hover:bg-slate-300 text-slate-800 py-2 px-4 rounded transition font-medium text-sm">Скачать материалы для коллег</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="interaction" class="py-16 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="section-title">Взаимодействие и онлайн-инструменты</h2>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                    
+        <section id="documents" class="tab-content">
+            <div class="bg-white rounded-3xl shadow-lg p-8 md:p-10 border-t-8 border-green-600">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4">
                     <div>
-                        <h3 class="text-xl font-semibold text-slate-800 mb-4">Образовательные платформы</h3>
-                        <p class="text-slate-600 mb-6">В своей работе я активно использую верифицированные цифровые образовательные ресурсы, которые способствуют повышению познавательного интереса учащихся.</p>
-                        <div class="space-y-4">
-                            <a href="#" class="card block p-4 border border-slate-200 rounded-lg hover:border-blue-300 bg-slate-50">
-                                <div class="font-bold text-blue-800">Российская электронная школа (РЭШ)</div>
-                                <div class="text-sm text-slate-500 mt-1">Интерактивные уроки по всему школьному курсу. Использую для закрепления материала.</div>
-                            </a>
-                            <a href="#" class="card block p-4 border border-slate-200 rounded-lg hover:border-blue-300 bg-slate-50">
-                                <div class="font-bold text-blue-800">Учи.ру</div>
-                                <div class="text-sm text-slate-500 mt-1">Отечественная образовательная онлайн-платформа. Применяю для индивидуализации обучения.</div>
-                            </a>
-                        </div>
+                        <h2 class="text-3xl font-extrabold text-green-800">Нормативно-правовая база</h2>
+                        <p class="text-green-900 mt-2 font-medium">Документы, на которые я опираюсь в своей работе.</p>
                     </div>
-
-                    <div class="bg-blue-50 p-8 rounded-xl border border-blue-100">
-                        <h3 class="text-xl font-semibold text-blue-900 mb-4">Опрос для родителей</h3>
-                        <p class="text-slate-700 mb-6 text-sm">
-                            Уважаемые родители! Для меня важна ваша обратная связь. Я регулярно провожу мониторинг удовлетворенности организацией образовательного процесса. Пожалуйста, уделите 5 минут для заполнения актуальной анкеты.
-                        </p>
-                        <form class="space-y-4" onsubmit="event.preventDefault(); alert('Функция отправки формы отключена в данном макете.');">
+                    <button onclick="window.print()" class="flex items-center justify-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-green-900 font-extrabold py-3 px-6 rounded-xl transition-colors shadow-md w-full sm:w-auto">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                        Распечатать
+                    </button>
+                </div>
+                
+                <div class="space-y-5">
+                    <div class="flex flex-col sm:flex-row items-center justify-between bg-green-50 p-6 rounded-2xl border border-green-200 gap-4">
+                        <div class="flex items-center gap-4 w-full">
+                            <div class="bg-white p-3 rounded-xl shadow-sm text-2xl">📑</div>
                             <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-1">Выберите тему опроса</label>
-                                <select class="w-full border-slate-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                                    <option>Удовлетворенность качеством питания</option>
-                                    <option>Организация внеурочной деятельности</option>
-                                    <option>Оценка комфортности образовательной среды</option>
-                                </select>
+                                <h3 class="font-bold text-green-900 text-lg">ФГОС Начального общего образования (НОО)</h3>
                             </div>
-                            <button type="submit" class="w-full bg-blue-600 text-white font-medium py-2.5 px-4 rounded-md hover:bg-blue-700 transition">Пройти анкетирование онлайн</button>
-                        </form>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <section id="results" class="py-16 bg-slate-50">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="section-title">Результативность работы</h2>
-                <p class="text-slate-600 mb-8">В данном разделе представлены документальные подтверждения моих профессиональных достижений, а также результаты участия моих учеников в олимпиадах и конкурсах различных уровней.</p>
-                
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <!-- Заглушки для дипломов -->
-                    <div class="group relative bg-white border border-slate-200 p-2 rounded shadow-sm hover:shadow-md transition">
-                        <img src="https://placehold.co/300x400/e2e8f0/1e3a8a?text=Диплом+учителя" alt="Диплом" class="w-full h-auto object-cover rounded">
-                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition flex items-center justify-center rounded">
-                            <span class="text-white opacity-0 group-hover:opacity-100 font-medium text-sm text-center px-2">Грамота Управления образования</span>
                         </div>
+                        <a href="#" download="FGOS_NOO.pdf" onclick="showToast('Загрузка документа начата. Я подготовила для вас актуальную версию.')" class="w-full sm:w-auto text-center text-white bg-green-600 hover:bg-green-700 font-bold py-3 px-8 rounded-xl transition-colors shadow-md flex-shrink-0">
+                            Скачать
+                        </a>
                     </div>
-                    <div class="group relative bg-white border border-slate-200 p-2 rounded shadow-sm hover:shadow-md transition">
-                        <img src="https://placehold.co/300x400/e2e8f0/1e3a8a?text=Сертификат" alt="Сертификат" class="w-full h-auto object-cover rounded">
-                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition flex items-center justify-center rounded">
-                            <span class="text-white opacity-0 group-hover:opacity-100 font-medium text-sm text-center px-2">Сертификат участника семинара</span>
-                        </div>
-                    </div>
-                    <div class="group relative bg-white border border-slate-200 p-2 rounded shadow-sm hover:shadow-md transition">
-                        <img src="https://placehold.co/300x400/e2e8f0/1e3a8a?text=Диплом+ученика" alt="Диплом ученика" class="w-full h-auto object-cover rounded">
-                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition flex items-center justify-center rounded">
-                            <span class="text-white opacity-0 group-hover:opacity-100 font-medium text-sm text-center px-2">Победитель олимпиады (Ученик)</span>
-                        </div>
-                    </div>
-                    <div class="group relative bg-white border border-slate-200 p-2 rounded shadow-sm hover:shadow-md transition">
-                        <img src="https://placehold.co/300x400/e2e8f0/1e3a8a?text=Благодарность" alt="Благодарность" class="w-full h-auto object-cover rounded">
-                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition flex items-center justify-center rounded">
-                            <span class="text-white opacity-0 group-hover:opacity-100 font-medium text-sm text-center px-2">Благодарственное письмо</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contacts" class="py-16 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="section-title">Контакты</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mt-8">
                     
-                    <div>
-                        <p class="text-slate-600 mb-6">Я открыта для профессионального диалога с коллегами и всегда готова ответить на вопросы родителей моих учеников. Вы можете связаться со мной любым удобным способом.</p>
-                        <ul class="space-y-4">
-                            <li class="flex items-center text-slate-700">
-                                <svg class="w-6 h-6 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                                <span>teacher.ivanova@example.com</span>
-                            </li>
-                            <li class="flex items-center text-slate-700">
-                                <svg class="w-6 h-6 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
-                                <span>+7 (999) 000-00-00 (Рабочее время: 14:00 - 18:00)</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <form class="bg-slate-50 p-6 rounded-lg border border-slate-200" onsubmit="event.preventDefault(); document.getElementById('success-msg').classList.remove('hidden'); this.reset();">
-                            <h3 class="font-semibold text-slate-800 mb-4">Написать сообщение</h3>
-                            <div class="mb-4">
-                                <label class="block text-sm font-medium text-slate-700 mb-1">Ваше имя</label>
-                                <input type="text" required class="w-full border-slate-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    <div class="flex flex-col sm:flex-row items-center justify-between bg-green-50 p-6 rounded-2xl border border-green-200 gap-4">
+                        <div class="flex items-center gap-4 w-full">
+                            <div class="bg-white p-3 rounded-xl shadow-sm text-2xl">📘</div>
+                            <div>
+                                <h3 class="font-bold text-green-900 text-lg">Закон "Об образовании в РФ"</h3>
                             </div>
-                            <div class="mb-4">
-                                <label class="block text-sm font-medium text-slate-700 mb-1">Ваш вопрос или предложение</label>
-                                <textarea rows="3" required class="w-full border-slate-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"></textarea>
-                            </div>
-                            <button type="submit" class="w-full bg-blue-600 text-white font-medium py-2 px-4 rounded hover:bg-blue-700 transition">Отправить</button>
-                            <p id="success-msg" class="hidden mt-3 text-sm text-green-600 font-medium">Сообщение успешно отправлено!</p>
-                        </form>
+                        </div>
+                        <a href="#" download="Zakon_RF.pdf" onclick="showToast('Загрузка Закона об образовании начата!')" class="w-full sm:w-auto text-center text-white bg-green-600 hover:bg-green-700 font-bold py-3 px-8 rounded-xl transition-colors shadow-md flex-shrink-0">
+                            Скачать
+                        </a>
                     </div>
-
                 </div>
             </div>
         </section>
+
+        <section id="contacts" class="tab-content">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 bg-white rounded-3xl shadow-lg p-8 border-t-8 border-yellow-400">
+                <div>
+                    <h2 class="text-3xl font-extrabold text-green-800 mb-8">Мои контакты</h2>
+                    <ul class="space-y-6 text-green-900 text-xl font-bold">
+                        <li class="flex items-center gap-4 bg-green-50 p-4 rounded-2xl">
+                            <span class="text-3xl">📍</span>
+                            <span>Школа</span>
+                        </li>
+                        <li class="flex items-center gap-4 bg-green-50 p-4 rounded-2xl">
+                            <span class="text-3xl">📞</span>
+                            <span>Номер телефона</span>
+                        </li>
+                        <li class="flex items-center gap-4 bg-green-50 p-4 rounded-2xl">
+                            <span class="text-3xl">✉️</span>
+                            <span>Почта</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-green-50 p-8 rounded-3xl border border-green-100">
+                    <h3 class="text-2xl font-extrabold mb-6 text-green-800">Написать мне</h3>
+                    <form onsubmit="handleFormSubmit(event)" class="space-y-5">
+                        <div>
+                            <label class="block text-sm font-bold text-green-900 mb-1">Ваше Имя</label>
+                            <input type="text" required class="w-full px-4 py-3 rounded-xl bg-white text-green-900 border border-green-200 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-green-900 mb-1">Ваш контакт (Email / Телефон)</label>
+                            <input type="text" required class="w-full px-4 py-3 rounded-xl bg-white text-green-900 border border-green-200 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-green-900 mb-1">Ваше сообщение</label>
+                            <textarea rows="4" required class="w-full px-4 py-3 rounded-xl bg-white text-green-900 border border-green-200 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition-all resize-none"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-extrabold text-lg py-4 rounded-xl transition-colors shadow-md">
+                            Отправить мне сообщение
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <footer class="bg-slate-800 py-8">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-slate-400 text-sm">© 2023–2024 Персональный сайт учителя. Все права защищены.</p>
-            <p class="text-slate-500 text-xs mt-2">Материалы сайта предназначены исключительно для образовательных целей.</p>
+    <footer class="bg-green-800 text-white mt-auto py-8 text-center border-t-8 border-green-600">
+        <div class="max-w-7xl mx-auto px-4 font-medium text-green-100">
+            &copy; 2026 Месьянинова Тамара Юрьевна. Моя безопасная образовательная среда.
         </div>
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const btn = document.getElementById('mobile-menu-btn');
-            const menu = document.getElementById('mobile-menu');
+        // Функция переключения вкладок
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
 
-            btn.addEventListener('click', () => {
-                menu.classList.toggle('hidden');
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-green-50', 'text-green-800', 'shadow-sm');
+                btn.classList.add('text-green-100');
+            });
+
+            document.getElementById(tabName).classList.add('active');
+            
+            const activeBtn = document.getElementById('btn-' + tabName);
+            activeBtn.classList.remove('text-green-100');
+            activeBtn.classList.add('bg-green-50', 'text-green-800', 'shadow-sm');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Система всплывающих уведомлений в ПРАВОМ НИЖНЕМ УГЛУ (вместо alert)
+        let toastTimeout;
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            
+            toastMsg.innerText = message;
+            
+            // Показываем, поднимая снизу вверх
+            toast.classList.remove('translate-y-[150%]', 'opacity-0');
+            toast.classList.add('toast-enter');
+            
+            clearTimeout(toastTimeout);
+            
+            // Скрываем через 3.5 секунды, опуская вниз
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('toast-enter');
+                toast.classList.add('translate-y-[150%]', 'opacity-0');
+            }, 3500);
+        }
+
+        // Обработка поиска
+        function handleSearch() {
+            const input = document.getElementById('searchInput');
+            const query = input.value.trim();
+            if (query) {
+                showToast(`Я ищу информацию по запросу: "${query}"...`);
+                input.value = '';
+            } else {
+                showToast('Пожалуйста, введите текст для поиска на моем сайте.');
+            }
+        }
+        document.getElementById('searchInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') handleSearch();
+        });
+
+        // Обработка формы
+        function handleFormSubmit(event) {
+            event.preventDefault(); 
+            showToast('Спасибо! Ваше сообщение отправлено. Я свяжусь с вами в ближайшее время.');
+            event.target.reset(); 
+        }
+    </script>
+</body>
+</html>
