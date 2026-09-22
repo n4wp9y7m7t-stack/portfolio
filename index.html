@@ -24,18 +24,35 @@
         .tab-content { display: none; animation: fadeIn 0.4s ease-in-out; }
         .tab-content.active { display: block; }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
         .toast-enter { transform: translateY(0); opacity: 1; }
         .toast-leave { transform: translateY(150%); opacity: 0; }
+        
+        /* Стили для выдержек из документов */
+        .quote-block {
+            border-left: 4px solid #eab308;
+            background: #f0fdf4;
+            padding: 1rem 1.5rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+            font-style: italic;
+            margin: 1rem 0;
+        }
+
+        /* Прячем лишнее при печати */
+        @media print {
+            header, nav, #toast, button, .print-hide { display: none !important; }
+            .tab-content { display: block !important; box-shadow: none !important; margin: 0 !important; padding: 0 !important; border: none !important; }
+            body { background-color: white; }
+        }
     </style>
 </head>
 <body class="text-green-800 flex flex-col min-h-screen">
 
-    <div id="toast" class="fixed bottom-4 right-4 transform translate-y-[150%] opacity-0 transition-all duration-300 z-50 bg-yellow-400 text-green-900 px-6 py-4 rounded-2xl shadow-xl font-bold flex items-center gap-3 pointer-events-none">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-        <span id="toast-message">Уведомление</span>
+    <div id="toast" class="fixed bottom-4 right-4 transform translate-y-[150%] opacity-0 transition-all duration-300 z-50 bg-yellow-400 text-green-900 px-6 py-4 rounded-2xl shadow-xl font-bold flex items-center gap-3 pointer-events-none max-w-sm">
+        <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span id="toast-message" class="text-sm">Уведомление</span>
     </div>
 
     <header class="bg-green-600 text-white shadow-lg sticky top-0 z-40">
@@ -49,7 +66,7 @@
             </div>
             
             <div class="relative flex items-center w-full md:w-auto">
-                <input type="text" id="searchInput" placeholder="Поиск по сайту..." class="w-full md:w-64 pl-4 pr-12 py-2.5 rounded-full text-green-900 text-sm focus:outline-none focus:ring-4 focus:ring-yellow-400 border-none shadow-inner bg-white">
+                <input type="text" id="searchInput" placeholder="Поиск по моему сайту..." class="w-full md:w-72 pl-4 pr-12 py-2.5 rounded-full text-green-900 text-sm focus:outline-none focus:ring-4 focus:ring-yellow-400 border-none shadow-inner bg-white">
                 <button onclick="handleSearch()" class="absolute right-1 top-1 bottom-1 bg-yellow-400 hover:bg-yellow-500 text-green-900 rounded-full px-4 transition-colors flex items-center justify-center font-bold">
                     Найти
                 </button>
@@ -57,12 +74,13 @@
         </div>
         
         <nav class="bg-green-700 px-4 sm:px-6 lg:px-8 overflow-x-auto">
-            <div class="max-w-7xl mx-auto flex space-x-2 min-w-max pt-2">
-                <button onclick="openTab('about')" id="btn-about" class="tab-btn px-6 py-3 text-sm font-bold rounded-t-xl transition-all bg-green-50 text-green-800 shadow-sm">Обо мне</button>
-                <button onclick="openTab('news')" id="btn-news" class="tab-btn px-6 py-3 text-sm font-bold rounded-t-xl transition-all text-green-100 hover:bg-green-600 hover:text-white">Новости</button>
-                <button onclick="openTab('materials')" id="btn-materials" class="tab-btn px-6 py-3 text-sm font-bold rounded-t-xl transition-all text-green-100 hover:bg-green-600 hover:text-white">Материалы</button>
-                <button onclick="openTab('documents')" id="btn-documents" class="tab-btn px-6 py-3 text-sm font-bold rounded-t-xl transition-all text-green-100 hover:bg-green-600 hover:text-white">Документы</button>
-                <button onclick="openTab('contacts')" id="btn-contacts" class="tab-btn px-6 py-3 text-sm font-bold rounded-t-xl transition-all text-green-100 hover:bg-green-600 hover:text-white">Контакты</button>
+            <div class="max-w-7xl mx-auto flex space-x-1 min-w-max pt-2">
+                <button onclick="openTab('about')" id="btn-about" class="tab-btn px-5 py-3 text-sm font-bold rounded-t-xl transition-all bg-green-50 text-green-800 shadow-sm">Обо мне</button>
+                <button onclick="openTab('news')" id="btn-news" class="tab-btn px-5 py-3 text-sm font-bold rounded-t-xl transition-all text-green-100 hover:bg-green-600 hover:text-white">Новости</button>
+                <button onclick="openTab('achievements')" id="btn-achievements" class="tab-btn px-5 py-3 text-sm font-bold rounded-t-xl transition-all text-green-100 hover:bg-green-600 hover:text-white">Достижения</button>
+                <button onclick="openTab('materials')" id="btn-materials" class="tab-btn px-5 py-3 text-sm font-bold rounded-t-xl transition-all text-green-100 hover:bg-green-600 hover:text-white">Материалы</button>
+                <button onclick="openTab('documents')" id="btn-documents" class="tab-btn px-5 py-3 text-sm font-bold rounded-t-xl transition-all text-green-100 hover:bg-green-600 hover:text-white">Документы</button>
+                <button onclick="openTab('contacts')" id="btn-contacts" class="tab-btn px-5 py-3 text-sm font-bold rounded-t-xl transition-all text-green-100 hover:bg-green-600 hover:text-white">Контакты</button>
             </div>
         </nav>
     </header>
@@ -70,33 +88,44 @@
     <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
         
         <section id="about" class="tab-content active">
-            <div class="bg-white rounded-3xl shadow-xl p-8 flex flex-col md:flex-row gap-10 items-start border-t-8 border-yellow-400">
-                <div class="w-full md:w-1/3 flex-shrink-0">
-                    <img src="ovWwU5nTUsaM2oZp2HQCPYw06Z2Fv16BXIAU1WGZpZNPI0byVqyFEFEphdiI5A2FZv5vy71qzZUw_jhkJbMbsKFJ.jpg" alt="Месьянинова Тамара Юрьевна" class="w-full h-auto rounded-2xl shadow-lg border-4 border-green-50 object-cover object-top">
+            <div class="bg-gradient-to-br from-white to-green-50 rounded-3xl shadow-xl p-8 md:p-12 flex flex-col md:flex-row gap-12 items-start border-t-8 border-yellow-400 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30"></div>
+                <div class="absolute -bottom-8 left-20 w-72 h-72 bg-green-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30"></div>
+                
+                <div class="w-full md:w-2/5 flex-shrink-0 z-10">
+                    <div class="p-2 bg-white rounded-3xl shadow-2xl transform -rotate-2 hover:rotate-0 transition-transform duration-300">
+                        <img src="ovWwU5nTUsaM2oZp2HQCPYw06Z2Fv16BXIAU1WGZpZNPI0byVqyFEFEphdiI5A2FZv5vy71qzZUw_jhkJbMbsKFJ.jpg" alt="Месьянинова Тамара Юрьевна" class="w-full h-auto rounded-2xl object-cover object-top border-4 border-yellow-100">
+                    </div>
                 </div>
-                <div class="w-full md:w-2/3">
-                    <span class="bg-green-100 text-green-800 px-4 py-1.5 rounded-full text-sm font-extrabold mb-4 inline-block tracking-wide">Самопрезентация</span>
-                    <h2 class="text-4xl font-extrabold text-green-800 mb-3">Добро пожаловать!</h2>
-                    <h3 class="text-2xl font-bold text-yellow-600 mb-6">Я — Месьянинова Тамара Юрьевна</h3>
+                
+                <div class="w-full md:w-3/5 z-10">
+                    <span class="bg-gradient-to-r from-green-500 to-green-600 text-white px-5 py-2 rounded-full text-sm font-extrabold mb-6 inline-block tracking-widest shadow-md uppercase">Моя визитная карточка</span>
+                    <h2 class="text-4xl md:text-5xl font-extrabold text-green-900 mb-4 leading-tight">Добро пожаловать в мой образовательный мир!</h2>
+                    <h3 class="text-2xl font-bold text-yellow-600 mb-8 pb-4 border-b-2 border-green-100">Я — Месьянинова Тамара Юрьевна</h3>
                     
-                    <p class="text-lg text-green-900 mb-6 leading-relaxed font-medium">
-                        Я рада видеть вас на моем образовательном ресурсе! Моя главная педагогическая миссия — создание комфортной, безопасной и мотивирующей среды для каждого моего ученика. Я твердо верю, что именно на моих уроках в начальной школе закладывается любовь к обучению, уверенность в себе и умение дружить. Я не просто осваиваю с детьми программу, я учу их мыслить, творить и достигать поставленных целей.
-                    </p>
+                    <div class="space-y-6 text-lg text-green-900 font-medium leading-relaxed">
+                        <p>
+                            Я считаю, что моя главная педагогическая миссия — создание атмосферы абсолютного психологического комфорта и безусловного принятия для каждого моего ученика. Я убеждена: только в безопасной и дружелюбной среде ребенок может полностью раскрыть свой потенциал.
+                        </p>
+                        <p>
+                            На моих уроках я выстраиваю работу так, чтобы каждый чувствовал свою значимость. Я не просто передаю знания, я учу детей мыслить самостоятельно, не бояться ошибок и с радостью открывать новое. Моя цель — зажечь искру любознательности в сердце каждого.
+                        </p>
+                    </div>
                     
-                    <div class="bg-green-50 p-6 rounded-2xl border border-green-200 shadow-sm">
-                        <h4 class="font-bold text-green-800 text-xl mb-4">Моя результативность и принципы работы:</h4>
-                        <ul class="space-y-3 text-green-900 font-semibold">
-                            <li class="flex items-start gap-3">
-                                <span class="text-yellow-500 text-xl mt-0.5">🌟</span> 
-                                <span>Я обеспечиваю 100% успеваемость моих учеников на протяжении последних лет.</span>
+                    <div class="mt-10 bg-white/80 backdrop-blur-sm p-8 rounded-3xl border border-green-100 shadow-lg">
+                        <h4 class="font-extrabold text-green-900 text-2xl mb-6">Основы моей работы:</h4>
+                        <ul class="space-y-5 text-green-800 font-bold">
+                            <li class="flex items-center gap-4 bg-green-50 p-4 rounded-xl transition hover:bg-green-100">
+                                <span class="flex-shrink-0 w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm text-yellow-500">🌱</span> 
+                                <span>Я создаю среду, где психологический комфорт ребенка является моим главным приоритетом.</span>
                             </li>
-                            <li class="flex items-start gap-3">
-                                <span class="text-yellow-500 text-xl mt-0.5">🏆</span> 
-                                <span>Я успешно готовлю победителей и призеров городских олимпиад.</span>
+                            <li class="flex items-center gap-4 bg-green-50 p-4 rounded-xl transition hover:bg-green-100">
+                                <span class="flex-shrink-0 w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm text-yellow-500">⭐</span> 
+                                <span>Я разрабатываю индивидуальные образовательные маршруты для раскрытия талантов.</span>
                             </li>
-                            <li class="flex items-start gap-3">
-                                <span class="text-yellow-500 text-xl mt-0.5">📚</span> 
-                                <span>Я применяю индивидуальный подход к психологическим особенностям каждого моего ученика.</span>
+                            <li class="flex items-center gap-4 bg-green-50 p-4 rounded-xl transition hover:bg-green-100">
+                                <span class="flex-shrink-0 w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm text-yellow-500">📈</span> 
+                                <span>Я обеспечиваю стабильную и высокую результативность обучения.</span>
                             </li>
                         </ul>
                     </div>
@@ -105,171 +134,234 @@
         </section>
 
         <section id="news" class="tab-content">
-            <h2 class="text-3xl font-extrabold text-green-800 mb-8 flex items-center gap-3">
-                <span class="text-4xl text-yellow-500">📰</span> Моя новостная лента
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Новость 1 -->
-                <article class="bg-white rounded-3xl shadow-lg overflow-hidden border border-green-100 hover:shadow-xl transition-shadow group">
-                    <div class="overflow-hidden h-72 bg-gray-100">
-                        <img src="i-65.webp" alt="Ученица за партой" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="text-center mb-12">
+                <span class="bg-yellow-100 text-yellow-800 px-4 py-1 rounded-full text-sm font-bold uppercase tracking-wider">События</span>
+                <h2 class="text-4xl font-extrabold text-green-900 mt-4">Моя новостная лента</h2>
+                <p class="text-green-700 mt-4 text-lg max-w-2xl mx-auto">Я делюсь с вами самыми яркими и важными событиями из моей школьной жизни.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <article class="bg-white rounded-3xl shadow-xl overflow-hidden border-2 border-transparent hover:border-yellow-400 transition-all duration-300 group flex flex-col transform hover:-translate-y-2">
+                    <div class="relative h-72 overflow-hidden">
+                        <img src="i-65.webp" alt="Ученица" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-4 py-2 rounded-xl text-green-900 font-black shadow-lg">
+                            Август 2026
+                        </div>
                     </div>
-                    <div class="p-8">
-                        <span class="inline-block px-3 py-1 bg-yellow-400 text-green-900 rounded-full text-xs font-bold mb-3">Организация среды</span>
-                        <h3 class="text-2xl font-bold text-green-800 mb-3">Мой класс готов к учебе!</h3>
-                        <p class="text-green-900 font-medium mb-5">Я завершила оформление моего кабинета к новому учебному году. Я тщательно продумала все зоны для отдыха и активного обучения, чтобы моим ученикам было максимально комфортно и безопасно.</p>
-                        <button onclick="showToast('Открываю полную статью об организации моего класса...')" class="font-bold text-green-600 hover:text-green-800 flex items-center gap-1 transition-colors">Читать далее <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                    <div class="p-8 flex-grow flex flex-col bg-gradient-to-b from-white to-green-50">
+                        <span class="inline-block text-yellow-600 font-extrabold text-sm mb-2 uppercase tracking-wider">Подготовка</span>
+                        <h3 class="text-3xl font-extrabold text-green-900 mb-4 leading-tight">Мой класс полностью готов к новому учебному году!</h3>
+                        <p class="text-green-800 text-lg mb-6 flex-grow leading-relaxed">В преддверии сентября я тщательно подготовила мой кабинет к встрече с учениками. Я продумала каждую зону, обновила наглядные пособия и создала уютные уголки для отдыха. Я делаю всё, чтобы возвращение за парты стало для детей настоящим праздником и проходило в максимально комфортных условиях.</p>
+                        <button onclick="showToast('Открываю мой план адаптационных мероприятий на сентябрь...')" class="w-full bg-green-100 hover:bg-green-600 hover:text-white text-green-900 font-bold py-3 rounded-xl transition-colors flex items-center justify-center gap-2">Узнать подробности <span class="text-xl">→</span></button>
                     </div>
                 </article>
                 
-                <!-- Новость 2 -->
-                <article class="bg-white rounded-3xl shadow-lg overflow-hidden border border-green-100 hover:shadow-xl transition-shadow group">
-                    <div class="overflow-hidden h-72 bg-gray-100">
-                        <img src="shkola2-e1722508170581.jpg.webp" alt="Ученики на уроке" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                <article class="bg-white rounded-3xl shadow-xl overflow-hidden border-2 border-transparent hover:border-green-500 transition-all duration-300 group flex flex-col transform hover:-translate-y-2">
+                    <div class="relative h-72 overflow-hidden">
+                        <img src="shkola2-e1722508170581.jpg.webp" alt="Ученики на уроке" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-4 py-2 rounded-xl text-green-900 font-black shadow-lg">
+                            Сентябрь 2026
+                        </div>
                     </div>
-                    <div class="p-8">
-                        <span class="inline-block px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-bold mb-3">Учебный процесс</span>
-                        <h3 class="text-2xl font-bold text-green-800 mb-3">Первые успехи моих учеников</h3>
-                        <p class="text-green-900 font-medium mb-5">Мои ученики активно включились в процесс! Я поздравляю ребят с успешной адаптацией. Улыбки детей на моих уроках — лучший показатель комфортной образовательной среды, которую я создаю.</p>
-                        <button onclick="showToast('Открываю фотоотчет с моих уроков...')" class="font-bold text-green-600 hover:text-green-800 flex items-center gap-1 transition-colors">Смотреть фото <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                    <div class="p-8 flex-grow flex flex-col bg-gradient-to-b from-white to-yellow-50">
+                        <span class="inline-block text-green-600 font-extrabold text-sm mb-2 uppercase tracking-wider">Уроки</span>
+                        <h3 class="text-3xl font-extrabold text-green-900 mb-4 leading-tight">Первые яркие успехи на моих занятиях</h3>
+                        <p class="text-green-800 text-lg mb-6 flex-grow leading-relaxed">Учебный год начался невероятно продуктивно! Я уже вижу результаты моей работы: ученики активно тянут руки, задают глубокие вопросы и демонстрируют искренний интерес к знаниям. Я стараюсь поддерживать эту инициативу, используя на моих уроках игровые и интерактивные методы.</p>
+                        <button onclick="showToast('Загружаю галерею с моих открытых уроков...')" class="w-full bg-yellow-100 hover:bg-yellow-500 hover:text-white text-yellow-900 font-bold py-3 rounded-xl transition-colors flex items-center justify-center gap-2">Смотреть фотоотчет <span class="text-xl">→</span></button>
                     </div>
                 </article>
             </div>
         </section>
 
-        <section id="materials" class="tab-content">
-            <div class="bg-white rounded-3xl shadow-lg p-8 border-t-8 border-green-600 mb-8">
-                <h2 class="text-3xl font-extrabold text-green-800 mb-8 text-center">Мои полезные материалы</h2>
+        <section id="achievements" class="tab-content">
+            <div class="bg-gradient-to-br from-green-600 to-green-800 rounded-3xl shadow-2xl p-8 md:p-14 text-white relative overflow-hidden">
+                <div class="absolute right-0 top-0 opacity-10">
+                    <svg class="w-96 h-96" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                    <!-- Детям -->
-                    <div class="bg-green-50 p-8 rounded-3xl border border-green-200 hover:shadow-md transition-shadow">
-                        <div class="text-4xl mb-4 text-center">🧸</div>
-                        <h3 class="text-2xl font-bold text-green-800 mb-4 text-center">Детям</h3>
-                        <p class="text-green-900 font-medium text-center mb-6">Онлайн-инструменты, которые я использую для интерактивного обучения моих учеников.</p>
-                        <div class="space-y-4">
-                            <a href="https://uchi.ru" target="_blank" class="block w-full text-center bg-white border-2 border-green-200 hover:border-yellow-400 text-green-800 font-bold py-3 rounded-xl transition-colors shadow-sm">Платформа Учи.ру</a>
-                            <button onclick="showToast('Запускаю мой авторский тренажер...')" class="w-full text-center bg-yellow-400 hover:bg-yellow-500 text-green-900 font-bold py-3 rounded-xl transition-colors shadow-sm">Мои авторские тесты</button>
+                <div class="relative z-10">
+                    <div class="text-center mb-12">
+                        <h2 class="text-4xl md:text-5xl font-extrabold text-yellow-300 mb-4 drop-shadow-md">Мои профессиональные результаты</h2>
+                        <p class="text-green-100 text-xl max-w-3xl mx-auto">Я ежедневно работаю над повышением качества образования. Мои достижения — это успехи и улыбки моих учеников.</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="bg-white/10 backdrop-blur-md p-8 rounded-3xl border border-white/20 hover:bg-white/20 transition-all transform hover:-translate-y-2">
+                            <div class="w-20 h-20 bg-yellow-400 rounded-2xl flex items-center justify-center text-4xl shadow-lg mb-6 transform -rotate-6">💯</div>
+                            <h3 class="text-2xl font-bold mb-4 text-white">100% успеваемость</h3>
+                            <p class="text-green-50 text-lg leading-relaxed">Я горжусь тем, что все дети в моем классе успешно осваивают учебную программу. Я уделяю время каждому, чтобы никто не отстал.</p>
+                        </div>
+
+                        <div class="bg-white/10 backdrop-blur-md p-8 rounded-3xl border border-white/20 hover:bg-white/20 transition-all transform hover:-translate-y-2">
+                            <div class="w-20 h-20 bg-green-400 rounded-2xl flex items-center justify-center text-4xl shadow-lg mb-6 transform rotate-3">🏅</div>
+                            <h3 class="text-2xl font-bold mb-4 text-white">Успех на ВПР</h3>
+                            <p class="text-green-50 text-lg leading-relaxed">Я успешно подготовила моих учеников к выполнению Всероссийских проверочных работ. Мой класс продемонстрировал высокий уровень предметных знаний.</p>
+                        </div>
+
+                        <div class="bg-white/10 backdrop-blur-md p-8 rounded-3xl border border-white/20 hover:bg-white/20 transition-all transform hover:-translate-y-2">
+                            <div class="w-20 h-20 bg-yellow-400 rounded-2xl flex items-center justify-center text-4xl shadow-lg mb-6 transform -rotate-3">🏆</div>
+                            <h3 class="text-2xl font-bold mb-4 text-white">Олимпиады</h3>
+                            <p class="text-green-50 text-lg leading-relaxed">Я регулярно готовлю победителей и призеров предметных олимпиад. Я умею вовлечь детей в углубленное изучение предметов.</p>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
 
-                    <!-- Родителям -->
-                    <div class="bg-yellow-50 p-8 rounded-3xl border border-yellow-200 hover:shadow-md transition-shadow">
-                        <div class="text-4xl mb-4 text-center">👨‍👩‍👧‍👦</div>
-                        <h3 class="text-2xl font-bold text-green-800 mb-4 text-center">Родителям</h3>
-                        <p class="text-green-900 font-medium mb-4">В моей работе я делаю особый акцент на преемственность начальной и средней школы.</p>
-                        <p class="text-green-800 text-sm font-semibold bg-white p-4 rounded-xl border border-yellow-200">
-                            Я заранее готовлю детей к переходу в 5 класс: развиваю навыки самостоятельности, обучаю тайм-менеджменту и готовлю к смене обстановки, чтобы мой выпускник чувствовал себя уверенно.
-                        </p>
+        <section id="materials" class="tab-content">
+            <div class="text-center mb-12">
+                <span class="bg-green-100 text-green-800 px-4 py-1 rounded-full text-sm font-bold uppercase tracking-wider">Библиотека</span>
+                <h2 class="text-4xl font-extrabold text-green-900 mt-4">Мои авторские материалы</h2>
+                <p class="text-green-700 mt-4 text-lg max-w-2xl mx-auto">Я с удовольствием делюсь моими методическими разработками и презентациями.</p>
+            </div>
+                
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-8">
+                <!-- Материал 1 -->
+                <div class="bg-white p-10 rounded-3xl shadow-xl border-t-8 border-yellow-400 flex flex-col relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-yellow-100 rounded-full -mr-10 -mt-10 transition-transform group-hover:scale-150 duration-500 z-0"></div>
+                    <div class="relative z-10 flex flex-col h-full">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-2xl flex items-center justify-center text-3xl shadow-lg text-white">🪐</div>
+                            <span class="bg-yellow-100 text-yellow-800 text-xs font-black px-3 py-1 rounded-full uppercase">Презентация</span>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-green-900 mb-4">Процесс образования Меркурия</h3>
+                        <p class="text-green-800 text-lg mb-6 flex-grow leading-relaxed">Для уроков окружающего мира я создала красочную <strong>12-слайдовую презентацию</strong>. В ней я в доступной и увлекательной форме объясняю сложный процесс формирования этой планеты. Я использую яркие иллюстрации и интерактивные вопросы, чтобы удержать внимание моих учеников от первого до последнего слайда.</p>
+                        <button onclick="showToast('Загружаю мою презентацию (12 слайдов) для предпросмотра...')" class="w-full bg-green-50 hover:bg-yellow-400 hover:text-green-900 text-green-800 font-extrabold text-lg py-4 rounded-xl transition-all shadow-sm border border-green-200 group-hover:border-transparent">Смотреть 12 слайдов</button>
                     </div>
                 </div>
 
-                <!-- Коллегам -->
-                <div class="bg-white border-2 border-green-100 p-8 rounded-3xl text-center max-w-3xl mx-auto shadow-sm">
-                    <div class="text-4xl mb-4">📚</div>
-                    <h3 class="text-2xl font-bold text-green-800 mb-3">Коллегам</h3>
-                    <p class="text-green-900 font-medium mb-6">Здесь я публикую свои методические разработки, конспекты открытых уроков и делюсь моим педагогическим опытом.</p>
-                    <button onclick="showToast('Открываю базу моих методических разработок...')" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-xl transition-colors shadow-md">
-                        Перейти к моим разработкам
-                    </button>
+                <!-- Материал 2 -->
+                <div class="bg-white p-10 rounded-3xl shadow-xl border-t-8 border-green-500 flex flex-col relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-green-100 rounded-full -mr-10 -mt-10 transition-transform group-hover:scale-150 duration-500 z-0"></div>
+                    <div class="relative z-10 flex flex-col h-full">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center text-3xl shadow-lg text-white">📚</div>
+                            <span class="bg-green-100 text-green-800 text-xs font-black px-3 py-1 rounded-full uppercase">Методика</span>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-green-900 mb-4">Подготовка к ВПР по лит. чтению</h3>
+                        <p class="text-green-800 text-lg mb-6 flex-grow leading-relaxed">Я делюсь моей методикой подготовки младших школьников к ВПР по литературному чтению, которую я успешно применяю на базе <strong>МКОУ "Верхнелюбажская СОШ"</strong>. Я разработала четкие алгоритмы работы с текстом, которые помогают детям анализировать произведения, находить скрытый смысл и уверенно формулировать свои мысли.</p>
+                        <button onclick="showToast('Открываю методические рекомендации (МКОУ Верхнелюбажская СОШ)...')" class="w-full bg-yellow-50 hover:bg-green-500 hover:text-white text-green-900 font-extrabold text-lg py-4 rounded-xl transition-all shadow-sm border border-yellow-200 group-hover:border-transparent">Изучить методику</button>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="documents" class="tab-content">
-            <div class="bg-white rounded-3xl shadow-lg p-8 md:p-10 border-t-8 border-green-600">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4">
-                    <div>
-                        <h2 class="text-3xl font-extrabold text-green-800">Нормативно-правовая база</h2>
-                        <p class="text-green-900 mt-2 font-medium">Документы, на которые я опираюсь в своей работе.</p>
+            <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 border-2 border-green-100">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-6 pb-8 border-b-2 border-green-50">
+                    <div class="text-center md:text-left">
+                        <h2 class="text-4xl font-extrabold text-green-900">Нормативно-правовая база</h2>
+                        <p class="text-green-700 mt-3 text-lg font-medium">Я строго опираюсь на действующие законы и стандарты РФ в моей работе.</p>
                     </div>
-                    <button onclick="window.print()" class="flex items-center justify-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-green-900 font-extrabold py-3 px-6 rounded-xl transition-colors shadow-md w-full sm:w-auto">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                        Распечатать
-                    </button>
+                    <div class="flex gap-4">
+                        <button onclick="window.print()" class="print-hide flex items-center justify-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-green-900 font-black py-3 px-6 rounded-xl transition-transform transform hover:scale-105 shadow-lg w-full md:w-auto">
+                            🖨️ Печать
+                        </button>
+                    </div>
                 </div>
-                
-                <div class="space-y-5">
-                    <div class="flex flex-col sm:flex-row items-center justify-between bg-green-50 p-6 rounded-2xl border border-green-200 gap-4">
-                        <div class="flex items-center gap-4 w-full">
-                            <div class="bg-white p-3 rounded-xl shadow-sm text-2xl">📑</div>
-                            <div>
-                                <h3 class="font-bold text-green-900 text-lg">ФГОС Начального общего образования (НОО)</h3>
-                            </div>
+
+                <div class="space-y-10">
+                    <!-- ФГОС НОО -->
+                    <div class="bg-gradient-to-r from-green-50 to-transparent p-8 rounded-3xl border-l-8 border-green-500 relative">
+                        <div class="absolute top-4 right-6 text-6xl opacity-10">📜</div>
+                        <h3 class="text-2xl font-extrabold text-green-900 mb-4">ФГОС Начального общего образования</h3>
+                        <p class="text-green-800 text-lg mb-6 font-medium">Моя образовательная программа полностью соответствует приказу Минпросвещения России. Я хочу выделить важнейшую выдержку из Раздела I, на которую я опираюсь каждый день:</p>
+                        <div class="bg-white p-6 rounded-2xl shadow-inner border border-green-200 text-green-900 italic font-medium leading-relaxed">
+                            <span class="text-green-500 text-4xl float-left mr-2 -mt-2">"</span>
+                            Федеральный государственный образовательный стандарт начального общего образования обеспечивает:
+                            <br><br>
+                            • единство образовательного пространства Российской Федерации, в том числе единство учебной и воспитательной деятельности...<br>
+                            • сохранение и развитие культурного разнообразия и языкового наследия многонационального народа Российской Федерации...<br>
+                            • личностное развитие обучающихся, в том числе гражданское, патриотическое, духовно-нравственное, эстетическое, физическое, трудовое, экологическое воспитание, ценность научного познания...
                         </div>
-                        <a href="#" download="FGOS_NOO.pdf" onclick="showToast('Загрузка документа начата. Я подготовила для вас актуальную версию.')" class="w-full sm:w-auto text-center text-white bg-green-600 hover:bg-green-700 font-bold py-3 px-8 rounded-xl transition-colors shadow-md flex-shrink-0">
-                            Скачать
-                        </a>
+                        <button onclick="showToast('Подготовка полного текста ФГОС НОО к скачиванию...')" class="print-hide mt-6 bg-white border-2 border-green-500 text-green-700 hover:bg-green-500 hover:text-white font-bold py-2 px-6 rounded-lg transition-colors">📥 Скачать полный текст (PDF)</button>
                     </div>
                     
-                    <div class="flex flex-col sm:flex-row items-center justify-between bg-green-50 p-6 rounded-2xl border border-green-200 gap-4">
-                        <div class="flex items-center gap-4 w-full">
-                            <div class="bg-white p-3 rounded-xl shadow-sm text-2xl">📘</div>
-                            <div>
-                                <h3 class="font-bold text-green-900 text-lg">Закон "Об образовании в РФ"</h3>
-                            </div>
+                    <!-- ФЗ-273 -->
+                    <div class="bg-gradient-to-r from-yellow-50 to-transparent p-8 rounded-3xl border-l-8 border-yellow-400 relative">
+                        <div class="absolute top-4 right-6 text-6xl opacity-10">⚖️</div>
+                        <h3 class="text-2xl font-extrabold text-green-900 mb-4">Федеральный закон от 29.12.2012 N 273-ФЗ "Об образовании в РФ"</h3>
+                        <p class="text-green-800 text-lg mb-6 font-medium">Я неукоснительно выполняю мои обязанности, прописанные в Статье 48 (Обязанности и ответственность педагогических работников). Я хочу привести точную цитату:</p>
+                        <div class="bg-white p-6 rounded-2xl shadow-inner border border-yellow-200 text-green-900 italic font-medium leading-relaxed">
+                            <span class="text-yellow-500 text-4xl float-left mr-2 -mt-2">"</span>
+                            1. Педагогические работники обязаны:<br>
+                            1) осуществлять свою деятельность на высоком профессиональном уровне, обеспечивать в полном объеме реализацию преподаваемых учебных предмета, курса, дисциплины (модуля)...<br>
+                            2) соблюдать правовые, нравственные и этические нормы, следовать требованиям профессиональной этики;<br>
+                            3) уважать честь и достоинство обучающихся и других участников образовательных отношений;<br>
+                            4) развивать у обучающихся познавательную активность, самостоятельность, инициативу, творческие способности...
                         </div>
-                        <a href="#" download="Zakon_RF.pdf" onclick="showToast('Загрузка Закона об образовании начата!')" class="w-full sm:w-auto text-center text-white bg-green-600 hover:bg-green-700 font-bold py-3 px-8 rounded-xl transition-colors shadow-md flex-shrink-0">
-                            Скачать
-                        </a>
+                        <button onclick="showToast('Подготовка ФЗ-273 к скачиванию...')" class="print-hide mt-6 bg-white border-2 border-yellow-500 text-yellow-700 hover:bg-yellow-400 hover:text-green-900 font-bold py-2 px-6 rounded-lg transition-colors">📥 Скачать статью 48 (PDF)</button>
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="contacts" class="tab-content">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 bg-white rounded-3xl shadow-lg p-8 border-t-8 border-yellow-400">
-                <div>
-                    <h2 class="text-3xl font-extrabold text-green-800 mb-8">Мои контакты</h2>
-                    <ul class="space-y-6 text-green-900 text-xl font-bold">
-                        <li class="flex items-center gap-4 bg-green-50 p-4 rounded-2xl">
-                            <span class="text-3xl">📍</span>
-                            <span>Школа</span>
-                        </li>
-                        <li class="flex items-center gap-4 bg-green-50 p-4 rounded-2xl">
-                            <span class="text-3xl">📞</span>
-                            <span>Номер телефона</span>
-                        </li>
-                        <li class="flex items-center gap-4 bg-green-50 p-4 rounded-2xl">
-                            <span class="text-3xl">✉️</span>
-                            <span>Почта</span>
-                        </li>
-                    </ul>
-                </div>
+            <div class="bg-gradient-to-bl from-green-900 to-green-800 rounded-3xl shadow-2xl p-8 md:p-14 text-white">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                    <div>
+                        <h2 class="text-4xl font-extrabold text-yellow-400 mb-6">Как со мной связаться</h2>
+                        <p class="text-green-100 text-lg mb-10 font-medium leading-relaxed">Я всегда открыта для общения с родителями и коллегами. Я буду рада ответить на ваши вопросы и обсудить любые идеи.</p>
+                        
+                        <div class="space-y-8">
+                            <div class="flex items-center gap-6 bg-white/10 p-6 rounded-2xl backdrop-blur-sm border border-white/20">
+                                <div class="w-16 h-16 bg-yellow-400 rounded-full flex items-center justify-center text-3xl shadow-inner flex-shrink-0">🏫</div>
+                                <div>
+                                    <p class="text-green-200 text-sm font-bold uppercase tracking-wider mb-1">Место работы</p>
+                                    <p class="text-2xl font-black text-white">Школа</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center gap-6 bg-white/10 p-6 rounded-2xl backdrop-blur-sm border border-white/20">
+                                <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-3xl shadow-inner flex-shrink-0">📱</div>
+                                <div>
+                                    <p class="text-green-200 text-sm font-bold uppercase tracking-wider mb-1">Телефон</p>
+                                    <p class="text-2xl font-black text-white">Номер телефона</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center gap-6 bg-white/10 p-6 rounded-2xl backdrop-blur-sm border border-white/20">
+                                <div class="w-16 h-16 bg-yellow-400 rounded-full flex items-center justify-center text-3xl shadow-inner flex-shrink-0">📧</div>
+                                <div>
+                                    <p class="text-green-200 text-sm font-bold uppercase tracking-wider mb-1">Электронная почта</p>
+                                    <p class="text-2xl font-black text-white">Почта</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                <div class="bg-green-50 p-8 rounded-3xl border border-green-100">
-                    <h3 class="text-2xl font-extrabold mb-6 text-green-800">Написать мне</h3>
-                    <form onsubmit="handleFormSubmit(event)" class="space-y-5">
-                        <div>
-                            <label class="block text-sm font-bold text-green-900 mb-1">Ваше Имя</label>
-                            <input type="text" required class="w-full px-4 py-3 rounded-xl bg-white text-green-900 border border-green-200 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition-all">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold text-green-900 mb-1">Ваш контакт (Email / Телефон)</label>
-                            <input type="text" required class="w-full px-4 py-3 rounded-xl bg-white text-green-900 border border-green-200 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition-all">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold text-green-900 mb-1">Ваше сообщение</label>
-                            <textarea rows="4" required class="w-full px-4 py-3 rounded-xl bg-white text-green-900 border border-green-200 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition-all resize-none"></textarea>
-                        </div>
-                        <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-extrabold text-lg py-4 rounded-xl transition-colors shadow-md">
-                            Отправить мне сообщение
-                        </button>
-                    </form>
+                    <div class="bg-white p-8 md:p-10 rounded-3xl shadow-2xl">
+                        <h3 class="text-3xl font-extrabold mb-8 text-green-900">Написать мне</h3>
+                        <form onsubmit="handleFormSubmit(event)" class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-bold text-green-700 mb-2 uppercase tracking-wide">Ваше Имя</label>
+                                <input type="text" required class="w-full px-5 py-4 rounded-xl bg-green-50 text-green-900 border-2 border-green-100 focus:outline-none focus:border-yellow-400 focus:bg-white transition-all font-medium">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-green-700 mb-2 uppercase tracking-wide">Как с вами связаться</label>
+                                <input type="text" required placeholder="Телефон или почта" class="w-full px-5 py-4 rounded-xl bg-green-50 text-green-900 border-2 border-green-100 focus:outline-none focus:border-yellow-400 focus:bg-white transition-all font-medium">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-green-700 mb-2 uppercase tracking-wide">Ваше сообщение</label>
+                                <textarea rows="4" required class="w-full px-5 py-4 rounded-xl bg-green-50 text-green-900 border-2 border-green-100 focus:outline-none focus:border-yellow-400 focus:bg-white transition-all resize-none font-medium"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-green-900 font-black text-xl py-5 rounded-xl transition-all shadow-lg transform hover:-translate-y-1">
+                                Отправить сообщение
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </section>
-
     </main>
 
-    <footer class="bg-green-800 text-white mt-auto py-8 text-center border-t-8 border-green-600">
+    <footer class="bg-green-800 text-white mt-auto py-8 text-center border-t-8 border-green-600 print-hide">
         <div class="max-w-7xl mx-auto px-4 font-medium text-green-100">
             &copy; 2026 Месьянинова Тамара Юрьевна. Моя безопасная образовательная среда.
         </div>
     </footer>
 
     <script>
-        // Функция переключения вкладок
         function openTab(tabName) {
             const contents = document.querySelectorAll('.tab-content');
             contents.forEach(content => content.classList.remove('active'));
@@ -289,7 +381,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Система всплывающих уведомлений в ПРАВОМ НИЖНЕМ УГЛУ (вместо alert)
         let toastTimeout;
         function showToast(message) {
             const toast = document.getElementById('toast');
@@ -297,20 +388,17 @@
             
             toastMsg.innerText = message;
             
-            // Показываем, поднимая снизу вверх
             toast.classList.remove('translate-y-[150%]', 'opacity-0');
             toast.classList.add('toast-enter');
             
             clearTimeout(toastTimeout);
             
-            // Скрываем через 3.5 секунды, опуская вниз
             toastTimeout = setTimeout(() => {
                 toast.classList.remove('toast-enter');
                 toast.classList.add('translate-y-[150%]', 'opacity-0');
-            }, 3500);
+            }, 4000);
         }
 
-        // Обработка поиска
         function handleSearch() {
             const input = document.getElementById('searchInput');
             const query = input.value.trim();
@@ -325,10 +413,9 @@
             if (e.key === 'Enter') handleSearch();
         });
 
-        // Обработка формы
         function handleFormSubmit(event) {
             event.preventDefault(); 
-            showToast('Спасибо! Ваше сообщение отправлено. Я свяжусь с вами в ближайшее время.');
+            showToast('Спасибо! Ваше сообщение успешно отправлено. Я свяжусь с вами в ближайшее время.');
             event.target.reset(); 
         }
     </script>
